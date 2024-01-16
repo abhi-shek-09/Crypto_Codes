@@ -1,5 +1,5 @@
 import java.util.*;
-public class Hill {
+public class Hill {   
     public static void main(String args[]){
         Scanner sc = new Scanner(System.in);
 
@@ -46,6 +46,7 @@ public class Hill {
                     C[i][j] += keyArray[i][k] * plaintextArray[k][j]; 
             } 
         } 
+        
         String ciphertext = "";
         for(int i = 0; i < C.length; i++) { 
             for(int j = 0; j < C[i].length; j++) 
