@@ -25,7 +25,7 @@ public class Vernam {
             char ckey = key.charAt(i);
             int val = ((ces - 'A') ^ (ckey - 'A'));
             val = val<0? val+26:val;
-            decrypted_string += (char)(((ces - 'A') ^ (ckey - 'A')) + 'A');
+            decrypted_string += (char)(val%26+ 'A');
         }
 
         System.out.println(decrypted_string);
