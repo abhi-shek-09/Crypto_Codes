@@ -1,48 +1,41 @@
 import java.util.*;
-public class Vigenere {
-    public static String extendKeyword(String plaintext, String keyword) {
-        if (plaintext.length() == keyword.length()) return keyword;
+public class Vigenere{
+    public static String extend_key(String s, String key){
+        if(s.length() == key.length()) return s;
 
-        StringBuilder key = new StringBuilder();
-        for (int i = 0; i < plaintext.length(); i++) {
-            key.append(keyword.charAt(i % keyword.length()));
+        String new_key = "";
+        int i = 0;
+        while(i < s.length()){
+            new_key += key.charAt(i%key.length());
+            i+=1;
         }
-        return key.toString();
+        return new_key;
     }
-
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter Plaintext: ");
-        String plaintext = sc.nextLine();
-        System.out.println("Enter key: ");
-        String keyword = sc.nextLine();
+        String s = sc.nextLine();
+        String key = sc.nextLine();
         sc.close();
-
-        String key = extendKeyword(plaintext, keyword);
-        System.out.println("Extended Key: " + key);
-
-        String ciphertext = encrypt(plaintext, key);
-        System.out.println("Cipher text: " + ciphertext);
-
-        String decryptedText = decrypt(ciphertext, key);
-        System.out.println("Decrypted text: " + decryptedText);
-    }
-
-    public static String encrypt(String plaintext, String key) {
-        StringBuilder ciphertext = new StringBuilder();
-        for (int i = 0; i < plaintext.length(); i++) {
-            int total = (int) (plaintext.charAt(i) + key.charAt(i));
-            ciphertext.append((char) (total % 26 + 'A'));
+        String new_key = extend_key(s, key);
+        
+        String enc_string = "";
+        for(int i=0; i<s.length(); i++){
+            char c1 = s.charAt(i);
+            char c2 = new_key.charAt(i);
+            int a = (c1 - 'A') + (c2 - 'A');
+            a = (a > 26)? (a%26): a;
+            enc_string += (char) (a + 65);
         }
-        return ciphertext.toString();
-    }
+        System.out.println(enc_string);
 
-    public static String decrypt(String ciphertext, String key) {
-        StringBuilder decryptedText = new StringBuilder();
-        for (int i = 0; i < ciphertext.length(); i++) {
-            int total = (int) (ciphertext.charAt(i) - key.charAt(i) + 26);
-            decryptedText.append((char) (total % 26 + 'A'));
+        String dec_string = "";
+        for(int i=0; i<enc_string.length(); i++){
+            char c1 = enc_string.charAt(i);
+            char c2 = new_key.charAt(i);
+            int a = (c1 - 'A') - (c2 - 'A');
+            a = (a<0)?a+26:a;
+            dec_string += (char) (a + 65);
         }
-        return decryptedText.toString();
+        System.out.println(dec_string);
     }
 }

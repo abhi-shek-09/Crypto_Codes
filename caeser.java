@@ -1,46 +1,26 @@
 import java.util.*;
-class caeser{
-    public static String encrypt(String s, int key){
-        String new_s = "";
-        for (char c : s.toCharArray()) {
-            if (Character.isLetter(c)) {
-                int res = c + key;
-                if (res > 122) {
-                    res = (res % 122) + 96; 
-                }
-                new_s += (char) (res);
-            } else {
-                new_s += c; 
-            }
-        }
-        return new_s;
-    }
-
-    public static String decrypt(String s, int key){
-        String new_s = "";
-        for (char c : s.toCharArray()) {
-            if (Character.isLetter(c)) {
-                int res = c - key;
-                if (res < 97) {
-                    res = 122 - (97-res)+1; 
-                }
-                new_s += (char) (res);
-            } else {
-                new_s += c; 
-            }
-        }
-        return new_s;
-    }
-    public static void main(String args[]) {
+public class caeser{
+    public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter shift or key: ");
+        String s = sc.nextLine();
         int key = sc.nextInt();
-        System.out.println("Enter plain text: ");
-        String s = sc.next().toLowerCase();
-        String encrypted_str = encrypt(s, key);
-        System.out.println("Cipher text is: " + encrypted_str);
-        String decrypted_str = decrypt(encrypted_str, key);
-        System.out.println("Decrypted Cipher text: " + decrypted_str);
         sc.close();
+
+        String encrypted_string = "";
+        for(int i=0; i<s.length(); i++){
+            char c = s.charAt(i);
+            char ch = (c + key)>90? (char)((c + key)%91 + 65) : (char)((c + key));
+            encrypted_string += ch;
+        }
+        System.out.println(encrypted_string);
+
+        String decrypted_string = "";
+        for(int i=0; i<encrypted_string.length(); i++){
+            char c = encrypted_string.charAt(i);
+            char ch = (c - key)<65? (char)((90 - (64 - (c - key)))) : (char)(c - key);
+            decrypted_string += ch;
+        }
+        System.out.println(decrypted_string);
+
     }
 }

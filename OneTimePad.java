@@ -1,45 +1,39 @@
 import java.util.*;
-public class OneTimePad {
-    public static void main(String[] args) {
+public class OneTimePad{
+    public static void main(String[] args){
         Scanner sc = new Scanner(System.in);
-        System.out.println("Enter message: ");
-        String message = sc.nextLine();
-        System.out.println("Enter key: ");
+        String s = sc.nextLine();
         String key = sc.nextLine();
-        String cipherString = "";
         sc.close();
-        HashMap<Character, Integer> map = new HashMap<>();
-        HashMap<Integer, Character> revmap = new HashMap<>();
-        for(int i=0; i<26; i++){
-            map.put((char)('A'+i), i);
-            revmap.put(i, (char)('A'+i));
+        String encrypted_string = "";
+        for(int i=0; i<s.length(); i++){
+            char c1 = s.charAt(i);
+            char c2 = key.charAt(i);
+            if(c1 == ' ' && c2 == ' '){
+                encrypted_string += ' ';
+            }
+            else{
+                encrypted_string += (char) ((((c1 - 'A') + (c2 - 'A'))%26) + 65);
+            }
         }
 
-        ArrayList<Integer> message_list = new ArrayList<>();
-        for(char c: message.toCharArray()){
-            message_list.add(map.get(c));
-        }
+        System.out.println(encrypted_string);
 
-        ArrayList<Integer> key_list = new ArrayList<>();
-        for(char c: key.toCharArray()){
-            key_list.add(map.get(c));
-        }
 
-        for(int i=0; i<message_list.size(); i++){
-            message_list.set(i, (message_list.get(i) + key_list.get(i))%26);
-            cipherString += revmap.get(message_list.get(i));
+        String decrypted_string = "";
+        for(int i=0; i<encrypted_string.length(); i++){
+            char c1 = encrypted_string.charAt(i);
+            char c2 = key.charAt(i);
+            if(c1 == ' ' && c2 == ' '){
+                decrypted_string += ' ';
+            }
+            else{
+                int a = ((c1 - 'A') - (c2 - 'A'));
+                a = (a>0)? a: 26+a;
+                decrypted_string += (char) ((a%26) + 65);
+            }
         }
-
-        System.out.println("Cipher text: " + cipherString);
-
-        String plaintext = "";
-        for(int i=0; i<message_list.size(); i++){
-            int n = message_list.get(i) - key_list.get(i);
-            n = (n<0)? 26+n: n;
-            message_list.set(i, n);
-            plaintext += revmap.get(message_list.get(i));
-        }
-        System.out.println("Plaintext: " + plaintext);
+        System.out.println(decrypted_string);
 
     }
 }
