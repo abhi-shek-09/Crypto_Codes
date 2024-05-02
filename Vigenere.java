@@ -18,24 +18,23 @@ public class Vigenere{
         sc.close();
         String new_key = extend_key(s, key);
         
-        String enc_string = "";
-        for(int i=0; i<s.length(); i++){
-            char c1 = s.charAt(i);
-            char c2 = new_key.charAt(i);
-            int a = (c1 - 'A') + (c2 - 'A');
-            a = (a > 26)? (a%26): a;
-            enc_string += (char) (a + 65);
+        String enc = "";
+        for(int i=0; i<new_key.length(); i++){
+            char c1 = new_key.charAt(i);
+            char c2 = s.charAt(i);
+            enc += (char)(((c1-'A') + (c2-'A'))%26 + 65);
         }
-        System.out.println(enc_string);
+        System.out.println(enc);
 
-        String dec_string = "";
-        for(int i=0; i<enc_string.length(); i++){
-            char c1 = enc_string.charAt(i);
-            char c2 = new_key.charAt(i);
-            int a = (c1 - 'A') - (c2 - 'A');
-            a = (a<0)?a+26:a;
-            dec_string += (char) (a + 65);
+        String dec = "";
+        for(int i=0; i<new_key.length(); i++){
+            char c1 = new_key.charAt(i);
+            char c2 = enc.charAt(i);
+            int a = ((c2-'A') - (c1-'A'));
+            a = (a>0)?a:(26+a);
+            dec += (char)(a+65);
+            // dec += 
         }
-        System.out.println(dec_string);
+        System.out.println(dec);
     }
 }

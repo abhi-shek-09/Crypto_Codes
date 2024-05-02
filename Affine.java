@@ -17,25 +17,19 @@ public class Affine{
         sc.close();
 
         String enc = "";
+
         for(int i=0; i<s.length(); i++){
             char c = s.charAt(i);
-            enc += (char) (((a*(c-'A') + b)%26) + 65);
+            int n = (a*(c-'A') + b)%26;
+            enc += (char)(n+65);
         }
-        System.out.println(enc);
-
-        int inv = -1;
-        if(inverse(a) == -1){
-            System.out.println("No inverse");
-        }
-        else{
-            inv = inverse(a);
-        }
+        int inv = inverse(a);
         String dec = "";
         for(int i=0; i<enc.length(); i++){
             char c = enc.charAt(i);
-            int l = ((inv * ( (c-'A')-b ))%26);
-            l = (l<0)?(26+l):l;
-            dec += (char) (l+65);
+            int n = (inv * ((c-'A') - b))%26;
+            n = (n>0)?n: 26+n;
+            dec += (char)(n+65);
         }
         System.out.println(dec);
     }
