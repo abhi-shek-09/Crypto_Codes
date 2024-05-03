@@ -3,49 +3,53 @@ import java.util.HashMap;
 public class AESKey {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String key = sc.nextLine();
+        String s = sc.nextLine();
         sc.close();
-        String binary_key = "";
-        for(char c: key.toCharArray()){
-            binary_key += '0';
-            binary_key += Integer.toBinaryString(c);
+        String binkey = "";
+        for(int i=0; i<s.length(); i++){
+            binkey += '0' + Integer.toBinaryString(s.charAt(i));
         }
-        HashMap<Integer, String> hex_map = new HashMap<Integer, String>();
-        hex_map.put(10, "A");
-        hex_map.put(11, "B");
-        hex_map.put(12, "C");
-        hex_map.put(13, "D");
-        hex_map.put(14, "E");
-        hex_map.put(15, "F");
-        String[] bytes = new String[16];
-        for(int i=0; i<binary_key.length(); i+=8){
-            String firsthalf = binary_key.substring(i, i+4);
-            String secondhalf = binary_key.substring(i+4, i+8);
-            
-            int a = Integer.parseInt(firsthalf, 2);
-            int b = Integer.parseInt(secondhalf, 2);
-            String int_a = Integer.toString(a);
-            String int_b = Integer.toString(b);
-            if(a>=10){
-                int_a = hex_map.get(a);
-            }
-            if(b>=10){
-                int_b = hex_map.get(b);
-            }
-            bytes[i/8] = int_a + int_b;
+        System.out.println(binkey);
+
+        HashMap<Integer, String> map = new HashMap<>();
+        map.put(10, "A");
+        map.put(11, "B");
+        map.put(12, "C");
+        map.put(13, "D");
+        map.put(14, "E");
+        map.put(15, "F");
+        String[] st_list = new String[16];
+        for(int i=0; i<binkey.length(); i+=8){
+            String p1 = binkey.substring(i, i+4);
+            String p2 = binkey.substring(i+4, i+8);
+
+            String num = "";
+            int p1_ = Integer.parseInt(p1, 2);
+            int p2_ = Integer.parseInt(p2, 2);
+            System.out.println(p1_ + " " + p2_);
+            if(p1_ >= 10)
+            num += map.get(p1_);
+            else
+            num+= Integer.toString(p1_);
+
+            if(p2_ >= 10)
+            num += map.get(p2_);
+            else
+            num+= Integer.toString(p2_);
+
+            st_list[i/8] = num;
         }
-        
+        String[][] st_lists = new String[4][4];
         int index = 0;
-        String[][] initial_key = new String[4][4];
         for(int i=0; i<4; i++){
-            for(int j=0; j<4; j++){
-                initial_key[j][i] = bytes[index++];
+            for(int j =0; j<4; j++){
+                st_lists[j][i] = st_list[index++];
             }
         }
 
         for(int i=0; i<4; i++){
-            for(int j=0; j<4; j++){
-                System.out.print(initial_key[i][j]  + " ");
+            for(int j =0; j<4; j++){
+                System.out.print(st_lists[i][j] + " ");
             }
             System.out.println();
         }

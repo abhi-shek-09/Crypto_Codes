@@ -1,15 +1,30 @@
 public class DESsbox {
     public static String Sbox(String ip, int[][] sbox){
-        String final_String = "";
+        String final_string = "";
         for(int i=0; i<ip.length(); i+=6){
-            String temp = ip.substring(i, i+6);
-            String row_st = temp.substring(0,1) + temp.substring(5, 6);
-            String column_st = temp.substring(1, 5);
-            int row = Integer.parseInt(row_st, 2);
-            int col = Integer.parseInt(column_st, 2);
-            final_String += Integer.toBinaryString(sbox[row][col]);
+            String sub = ip.substring(i, i+6);
+            String rowString = sub.substring(0, 1) + sub.substring(5, 6);
+            String colString = sub.substring(1, 5);
+            int row = Integer.parseInt(rowString, 2);
+            int col = Integer.parseInt(colString, 2);
+            int num = sbox[row][col];
+            if(num == 0){
+                final_string += "0000";
+            }
+            else if(num == 1){
+                final_string += "000" + Integer.toBinaryString(num);
+            }
+            else if(num>1 && num<=3){
+                final_string += "00" + Integer.toBinaryString(num);
+            }
+            else if(num>=4 && num<=7){
+                final_string += "0" + Integer.toBinaryString(num);
+            }
+            else{
+                final_string += Integer.toBinaryString(num);
+            }
         }
-        return final_String;
+        return final_string;
     }
     public static void main(String[] args) {
         String ip_string = "111000001011111001101110101001000001100101100000";
@@ -20,7 +35,7 @@ public class DESsbox {
             {15, 12, 8, 2, 4, 9, 1, 7, 5, 11, 3, 14, 10, 0, 6, 13}
         };
         String s2 = Sbox(ip_string, s1);
-        System.out.println(s2);
+        System.out.println(s2.length());
         // like this make 7 more s'i' tables and pass it through a function
     }   
 }

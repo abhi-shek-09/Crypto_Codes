@@ -12,8 +12,6 @@ public class ElgamalDSA {
         int al = 10;
         int xa = 16;
         int ya = (int)(Math.pow(al, xa) % q);
-
-        int m = 4;
         int hm = 14;
 
         int k = 5;
